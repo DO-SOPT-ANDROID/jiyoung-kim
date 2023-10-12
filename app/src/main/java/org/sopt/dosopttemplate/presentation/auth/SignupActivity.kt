@@ -22,10 +22,10 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(R.layout.activity_sig
     private fun clickListeners() {
         binding.btnSignupBottom.setOnClickListener {
             userInfo = UserInfo(
-                binding.edtLoginId.text.toString(),
-                binding.edtLoginPwd.text.toString(),
-                binding.edtLoginNickname.text.toString(),
-                binding.edtLoginMbti.text.toString(),
+                binding.edtSignupId.text.toString(),
+                binding.edtSignupPwd.text.toString(),
+                binding.edtSignupNickname.text.toString(),
+                binding.edtSignupMbti.text.toString(),
             )
             viewModel.checkSignUpValid(userInfo)
         }
@@ -36,7 +36,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(R.layout.activity_sig
             if (it == true) {
                 intentUserInfo()
             } else {
-                binding.root.showToast("회원가입 다시 해주세요")
+                binding.root.showToast(getString(R.string.signup_failed))
             }
         }
     }

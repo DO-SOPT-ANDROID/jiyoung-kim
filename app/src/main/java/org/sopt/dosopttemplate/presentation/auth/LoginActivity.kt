@@ -24,7 +24,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                 data.getParcelableExtra<UserInfo>(USER_INFO).apply {
                     this?.let {
                         signUpInfo = it
-                        binding.root.showSnackbar("회원가입 완료!")
+                        binding.root.showSnackbar(getString(R.string.signup_success))
                     }
                 }
             } else {
@@ -34,7 +34,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.vm = viewModel
         clickListeners()
         getUserInfo()
         checkLoginValid()
@@ -81,10 +80,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
     private fun observeLoginResult() {
         viewModel.isLoginValid.observe(this) { result ->
             if (result) {
-                binding.root.showSnackbar("로그인 성공!")
+                binding.root.showSnackbar(getString(R.string.login_success))
                 intentToProfileActivity()
             } else {
-                binding.root.showSnackbar("다시 로그인해주세요")
+                binding.root.showSnackbar(getString(R.string.login_failed))
             }
         }
     }

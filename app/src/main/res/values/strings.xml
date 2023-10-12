@@ -1,3 +1,26 @@
 <resources>
     <string name="app_name">DoSoptTemplate</string>
+    <string name="tv_signup_title">회원가입</string>
+    <string name="tv_main_id">ID</string>
+    <string name="edt_login_id">아이디를 입력해주세요.</string>
+    <string name="tv_signup_pwd">PASSWORD</string>
+    <string name="edt_signup_pwd">비밀번호를 입력해주세요.</string>
+    <string name="tv_signup_nickname">NICKNAME</string>
+    <string name="edt_signup_nickname">닉네임을 입력해주세요.</string>
+    <string name="tv_signup_mbti">MBTI</string>
+    <string name="edt_signup_mbti">MBTI를 입력해주세요.</string>
+    <string name="btn_signup_bottom">회원가입</string>
+    <string name="tv_profile_id_title">ID</string>
+    <string name="tv_profile_name_title">닉네임</string>
+    <string name="tv_profile_mbti_title">MBTI</string>
+    <string name="tv_login_title">SOPT</string>
+    <string name="edt_login_pwd">비밀번호를 입력해주세요.</string>
+    <string name="btn_login_bottom">로그인</string>
+    <string name="tv_login_signup">계정이 없으신가요? 회원가입하기</string>
+    <string name="tv_login_pwd">PASSWORD</string>
+    <string name="tv_login_id">ID</string>
+    <string name="login_success">로그인 성공!</string>
+    <string name="login_failed">다시 로그인해주세요</string>
+    <string name="signup_failed">회원가입 다시 해주세요</string>
+    <string name="signup_success">회원가입 완료!</string>
 </resources>
