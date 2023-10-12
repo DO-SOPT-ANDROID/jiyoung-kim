@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.home.ProfileActivity">
+
+        <ImageView
+            android:id="@+id/iv_profile_main"
+            android:layout_width="150dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="1"
+            android:layout_marginTop="124dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_profile_id_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="ID"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/iv_profile_main"
+            app:layout_constraintTop_toBottomOf="@+id/iv_profile_main" />
+
+        <TextView
+            android:id="@+id/tv_profile_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="ID머임"
+            app:layout_constraintStart_toStartOf="@+id/tv_profile_id_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_profile_id_title" />
+
+        <TextView
+            android:id="@+id/tv_profile_name_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="닉네임"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_profile_id"
+            app:layout_constraintTop_toBottomOf="@+id/tv_profile_id" />
+
+        <TextView
+            android:id="@+id/tv_profile_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="닉네임 머임"
+            app:layout_constraintStart_toStartOf="@+id/tv_profile_name_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_profile_name_title" />
+
+        <TextView
+            android:id="@+id/tv_profile_mbti_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="MBTI"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_profile_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_profile_name" />
+
+        <TextView
+            android:id="@+id/tv_profile_mbti"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="MBTI 머임"
+            app:layout_constraintStart_toStartOf="@+id/tv_profile_mbti_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_profile_mbti_title" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
