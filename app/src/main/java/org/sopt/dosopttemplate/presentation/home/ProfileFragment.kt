@@ -2,22 +2,23 @@ package org.sopt.dosopttemplate.presentation.home
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.viewModels
+import android.view.View
+import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.sopt.dosopttemplate.R
-import org.sopt.dosopttemplate.databinding.ActivityProfileBinding
+import org.sopt.dosopttemplate.databinding.FragmentProfileBinding
 import org.sopt.dosopttemplate.presentation.auth.LoginActivity
-import org.sopt.dosopttemplate.presentation.base.BaseActivity
+import org.sopt.dosopttemplate.presentation.base.BaseFragment
 import org.sopt.dosopttemplate.util.UiState
 import org.sopt.dosopttemplate.util.extension.loadImage
 import org.sopt.dosopttemplate.util.extension.showSnackbar
 
 @AndroidEntryPoint
-class ProfileActivity : BaseActivity<ActivityProfileBinding>(R.layout.activity_profile) {
+class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_profile) {
     private val viewModel by viewModels<ProfileViewModel>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initView()
         clickListener()
         observeWithdrawState()
@@ -39,11 +40,10 @@ class ProfileActivity : BaseActivity<ActivityProfileBinding>(R.layout.activity_p
     }
 
     private fun observeWithdrawState() {
-        viewModel.withdrawState.observe(this) { state ->
+        viewModel.withdrawState.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is UiState.Success -> {
-                    Intent(this, LoginActivity::class.java)
-                    finish()
+                    Intent(requireContext(), LoginActivity::class.java)
                 }
 
                 is UiState.Failure -> {
