@@ -1,35 +1,55 @@
 package org.sopt.dosopttemplate.presentation.home
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import androidx.activity.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import org.sopt.dosopttemplate.R
-import org.sopt.dosopttemplate.data.UserInfo
 import org.sopt.dosopttemplate.databinding.ActivityProfileBinding
+import org.sopt.dosopttemplate.presentation.auth.LoginActivity
 import org.sopt.dosopttemplate.presentation.base.BaseActivity
+import org.sopt.dosopttemplate.util.UiState
 import org.sopt.dosopttemplate.util.extension.loadImage
+import org.sopt.dosopttemplate.util.extension.showSnackbar
 
+@AndroidEntryPoint
 class ProfileActivity : BaseActivity<ActivityProfileBinding>(R.layout.activity_profile) {
-    private lateinit var userInfo: UserInfo
+    private val viewModel by viewModels<ProfileViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getUSerInfo()
-        loadImage()
+        initView()
+        clickListener()
+        observeWithdrawState()
     }
 
-    private fun getUSerInfo() {
-        userInfo = intent.getParcelableExtra(USER_INFO) ?: UserInfo("null", "null", "null", "null")
-        Log.d("test", "userInfo:: $userInfo")
-        binding.tvProfileId.text = userInfo.id
-        binding.tvProfileName.text = userInfo.name
-        binding.tvProfileMbti.text = userInfo.mbti
+    private fun initView() {
+        with(binding) {
+            binding.ivProfileMain.loadImage(R.drawable.mike)
+            tvProfileId.text = viewModel.user.value?.id.toString()
+            tvProfileName.text = viewModel.user.value?.name.toString()
+            tvProfileMbti.text = viewModel.user.value?.mbti.toString()
+        }
     }
 
-    private fun loadImage() {
-        binding.ivProfileMain.loadImage(R.drawable.mike)
+    private fun clickListener() {
+        binding.tvProfileWithdraw.setOnClickListener {
+            viewModel.deleteUser()
+        }
     }
 
-    companion object {
-        const val USER_INFO = "userInfo"
+    private fun observeWithdrawState() {
+        viewModel.withdrawState.observe(this) { state ->
+            when (state) {
+                is UiState.Success -> {
+                    Intent(this, LoginActivity::class.java)
+                    finish()
+                }
+
+                is UiState.Failure -> {
+                    binding.root.showSnackbar(getString(R.string.withdraw_failed))
+                }
+            }
+        }
     }
 }
