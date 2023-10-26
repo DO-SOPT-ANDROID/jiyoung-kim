@@ -14,8 +14,8 @@ import org.sopt.dosopttemplate.util.extension.loadImage
 import org.sopt.dosopttemplate.util.extension.showSnackbar
 
 @AndroidEntryPoint
-class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_profile) {
-    private val viewModel by viewModels<ProfileViewModel>()
+class MypageFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_profile) {
+    private val viewModel by viewModels<MainViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

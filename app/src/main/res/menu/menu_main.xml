@@ -5,7 +5,7 @@
     <item
         android:id="@+id/menu_do_android"
         android:icon="@drawable/ic_android"
-        android:title="친구목록" />
+        android:title="Android" />
 
     <!-- Home -->
     <item

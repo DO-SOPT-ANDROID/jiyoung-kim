@@ -5,10 +5,6 @@
 
     <data>
 
-        <variable
-            name="vm"
-            type="org.sopt.dosopttemplate.presentation.home.ProfileViewModel" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
