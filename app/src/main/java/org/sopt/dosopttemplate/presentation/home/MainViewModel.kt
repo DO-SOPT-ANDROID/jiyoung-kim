@@ -10,7 +10,7 @@ import org.sopt.dosopttemplate.util.UiState
 import javax.inject.Inject
 
 @HiltViewModel
-class ProfileViewModel @Inject constructor(private val authRepository: AuthRepository) :
+class MainViewModel @Inject constructor(private val authRepository: AuthRepository) :
     ViewModel() {
     val user = MutableLiveData<User>()
     private val _withdrawState = MutableLiveData<UiState>()
@@ -20,7 +20,7 @@ class ProfileViewModel @Inject constructor(private val authRepository: AuthRepos
         user.value = getUserInfo()
     }
 
-    private fun getUserInfo(): User = authRepository.getUser() ?: User("f", "", "", "")
+    private fun getUserInfo(): User = authRepository.getUser() ?: User("", "", "", "")
 
     fun deleteUser() {
         runCatching {

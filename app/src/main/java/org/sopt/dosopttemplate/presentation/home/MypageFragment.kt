@@ -26,7 +26,7 @@ class MypageFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_pr
 
     private fun initView() {
         with(binding) {
-            binding.ivProfileMain.loadImage(R.drawable.mike)
+            binding.ivProfileMain.loadImage(R.drawable.mike, 20f)
             tvProfileId.text = viewModel.user.value?.id.toString()
             tvProfileName.text = viewModel.user.value?.name.toString()
             tvProfileMbti.text = viewModel.user.value?.mbti.toString()
