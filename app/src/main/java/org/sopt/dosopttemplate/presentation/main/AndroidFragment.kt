@@ -1,4 +1,4 @@
-package org.sopt.dosopttemplate.presentation.home
+package org.sopt.dosopttemplate.presentation.main
 
 import dagger.hilt.android.AndroidEntryPoint
 import org.sopt.dosopttemplate.R

@@ -1,4 +1,4 @@
-package org.sopt.dosopttemplate.presentation.home
+package org.sopt.dosopttemplate.presentation.main.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

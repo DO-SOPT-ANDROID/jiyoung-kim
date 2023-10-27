@@ -12,7 +12,7 @@ import org.sopt.dosopttemplate.data.model.User
 import org.sopt.dosopttemplate.databinding.ActivityLoginBinding
 import org.sopt.dosopttemplate.presentation.auth.LoginViewModel.Companion.LOGIN_ERROR
 import org.sopt.dosopttemplate.presentation.base.BaseActivity
-import org.sopt.dosopttemplate.presentation.home.MainActivity
+import org.sopt.dosopttemplate.presentation.main.MainActivity
 import org.sopt.dosopttemplate.util.UiState
 import org.sopt.dosopttemplate.util.extension.hideKeyboard
 import org.sopt.dosopttemplate.util.extension.showSnackbar

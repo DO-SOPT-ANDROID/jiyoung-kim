@@ -1,4 +1,4 @@
-package org.sopt.dosopttemplate.presentation.home
+package org.sopt.dosopttemplate.presentation.main.mypage
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,7 +10,7 @@ import org.sopt.dosopttemplate.util.UiState
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val authRepository: AuthRepository) :
+class MypageViewModel @Inject constructor(private val authRepository: AuthRepository) :
     ViewModel() {
     val user = MutableLiveData<User>()
     private val _withdrawState = MutableLiveData<UiState>()

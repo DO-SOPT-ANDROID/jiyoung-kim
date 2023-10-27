@@ -7,7 +7,7 @@
 
         <variable
             name="data"
-            type="org.sopt.dosopttemplate.presentation.home.FriendProfile" />
+            type="org.sopt.dosopttemplate.presentation.main.home.FriendProfile" />
 
     </data>
 

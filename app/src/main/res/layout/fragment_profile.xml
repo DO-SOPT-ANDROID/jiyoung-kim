@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.home.ProfileActivity">
+        tools:context=".presentation.main.ProfileActivity">
 
         <ImageView
             android:id="@+id/iv_profile_main"

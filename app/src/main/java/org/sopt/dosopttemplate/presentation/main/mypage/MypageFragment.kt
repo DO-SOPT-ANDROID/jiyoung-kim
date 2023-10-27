@@ -1,4 +1,4 @@
-package org.sopt.dosopttemplate.presentation.home
+package org.sopt.dosopttemplate.presentation.main.mypage
 
 import android.content.Intent
 import android.os.Bundle
@@ -15,7 +15,7 @@ import org.sopt.dosopttemplate.util.extension.showSnackbar
 
 @AndroidEntryPoint
 class MypageFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_profile) {
-    private val viewModel by viewModels<MainViewModel>()
+    private val viewModel by viewModels<MypageViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
