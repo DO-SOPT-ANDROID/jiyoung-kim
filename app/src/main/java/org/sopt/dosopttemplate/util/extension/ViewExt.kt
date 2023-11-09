@@ -1,6 +1,8 @@
 package org.sopt.dosopttemplate.util.extension
 
+import android.content.Context
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.Toast
 import coil.load
@@ -18,10 +20,18 @@ fun View.showToast(message: String) {
         .show()
 }
 
-fun ImageView.loadImage(image: Int?) {
+fun ImageView.loadImage(image: Int?, radius: Float) {
     load(image) {
         placeholder(R.drawable.rect_grey_radius_10)
-            .transformations(RoundedCornersTransformation(20f, 20f, 20f, 20f))
+            .transformations(
+                RoundedCornersTransformation(radius),
+            )
             .error(R.drawable.ic_launcher_background)
     }
+}
+
+fun View.hideKeyboard() {
+    val inputMethodManager =
+        context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
 }

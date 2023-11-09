@@ -3,49 +3,68 @@ package org.sopt.dosopttemplate.presentation.auth
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import org.sopt.dosopttemplate.R
-import org.sopt.dosopttemplate.data.UserInfo
+import org.sopt.dosopttemplate.data.model.User
 import org.sopt.dosopttemplate.databinding.ActivitySignupBinding
+import org.sopt.dosopttemplate.presentation.auth.SignupViewModel.Companion.EMPTY_ERROR
+import org.sopt.dosopttemplate.presentation.auth.SignupViewModel.Companion.ID_ERROR
+import org.sopt.dosopttemplate.presentation.auth.SignupViewModel.Companion.PWD_ERROR
 import org.sopt.dosopttemplate.presentation.base.BaseActivity
-import org.sopt.dosopttemplate.util.extension.showToast
+import org.sopt.dosopttemplate.util.UiState
+import org.sopt.dosopttemplate.util.extension.hideKeyboard
+import org.sopt.dosopttemplate.util.extension.showSnackbar
 
+@AndroidEntryPoint
 class SignupActivity : BaseActivity<ActivitySignupBinding>(R.layout.activity_signup) {
     private val viewModel by viewModels<SignupViewModel>()
-    private lateinit var userInfo: UserInfo
+    private lateinit var user: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        observeSignUpResult()
+        observeSignUpState()
         clickListeners()
+        hideKeyboard()
+    }
+
+    private fun observeSignUpState() {
+        viewModel.signUpState.observe(this) { state ->
+            when (state) {
+                is UiState.Success -> intentToLogin()
+                is UiState.Failure -> {
+                    when (state.type) {
+                        ID_ERROR -> binding.root.showSnackbar(getString(R.string.signup_failed_id))
+                        PWD_ERROR -> binding.root.showSnackbar(getString(R.string.signup_failed_pwd))
+                        EMPTY_ERROR -> binding.root.showSnackbar(getString(R.string.signup_failed_empty))
+                    }
+                }
+            }
+        }
     }
 
     private fun clickListeners() {
         binding.btnSignupBottom.setOnClickListener {
-            userInfo = UserInfo(
+            user = User(
                 binding.edtSignupId.text.toString(),
                 binding.edtSignupPwd.text.toString(),
                 binding.edtSignupNickname.text.toString(),
                 binding.edtSignupMbti.text.toString(),
             )
-            viewModel.checkSignUpValid(userInfo)
+            viewModel.signUp(user.toUser())
         }
     }
 
-    private fun observeSignUpResult() {
-        viewModel.isSignUpValid.observe(this) {
-            if (it == true) {
-                intentUserInfo()
-            } else {
-                binding.root.showToast(getString(R.string.signup_failed))
-            }
-        }
-    }
-
-    private fun intentUserInfo() {
+    private fun intentToLogin() {
         val intent = Intent(this, LoginActivity::class.java)
-        intent.putExtra(USER_INFO, userInfo)
+        intent.putExtra(USER_INFO, user)
         setResult(RESULT_OK, intent)
         finish()
+    }
+
+    private fun hideKeyboard() {
+        binding.clSignupSecond.setOnClickListener {
+            it.hideKeyboard()
+        }
     }
 
     companion object {
