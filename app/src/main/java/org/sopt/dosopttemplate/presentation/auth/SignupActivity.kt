@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.sopt.dosopttemplate.R
@@ -25,6 +26,7 @@ import java.util.Locale
 class SignupActivity : BaseActivity<ActivitySignupBinding>(R.layout.activity_signup) {
     private val viewModel by viewModels<SignupViewModel>()
     private lateinit var user: User
+    private var formattedDate: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +57,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(R.layout.activity_sig
                 binding.edtSignupPwd.text.toString(),
                 binding.edtSignupNickname.text.toString(),
                 binding.edtSignupMbti.text.toString(),
+                binding.edtSignupBirthday.text.toString(),
             )
             viewModel.signUp(user.toUser())
         }
@@ -97,8 +100,8 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(R.layout.activity_sig
 
     private fun updateBirthdayEditText(date: Date) {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
-        val formattedDate = dateFormat.format(date)
-
+        formattedDate = dateFormat.format(date)
+        Log.d("signup", "formattedDate:: $formattedDate")
         binding.edtSignupBirthday.text = Editable.Factory.getInstance().newEditable(formattedDate)
     }
 

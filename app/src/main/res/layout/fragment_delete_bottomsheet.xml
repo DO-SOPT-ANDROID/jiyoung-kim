@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_delete_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="20dp"
+        android:background="@drawable/rect_white_fill_top_12"
+        tools:context=".presentation.main.home.DeleteBottomsheetFragment">
+
+        <ImageView
+            android:id="@+id/iv_delete_icon"
+            android:layout_width="20dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/ic_trash"
+            app:layout_constraintDimensionRatio="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_delete_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_delete_title"
+            android:textColor="#FF7E55"
+            android:textStyle="bold"
+            android:layout_marginStart="20dp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_delete_icon"
+            app:layout_constraintStart_toEndOf="@id/iv_delete_icon"
+            app:layout_constraintTop_toTopOf="@id/iv_delete_icon" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
