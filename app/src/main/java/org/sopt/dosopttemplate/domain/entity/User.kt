@@ -5,4 +5,5 @@ data class User(
     val pwd: String,
     val name: String?,
     val mbti: String?,
+    val birthday: String?,
 )

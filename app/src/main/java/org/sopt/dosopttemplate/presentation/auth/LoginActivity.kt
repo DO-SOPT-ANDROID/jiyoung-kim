@@ -88,6 +88,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                 pwd = inputPwd,
                 "",
                 "",
+                "",
             )
             viewModel.login(loginInfo.toUser(), viewModel.user)
         } else {

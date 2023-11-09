@@ -10,8 +10,9 @@ data class User(
     val pwd: String,
     val name: String?,
     val mbti: String?,
+    val birthday: String?,
 ) : Parcelable {
     fun toUser(): User {
-        return User(id, pwd, name ?: "", mbti ?: "")
+        return User(id, pwd, name ?: "", mbti ?: "", birthday ?: "")
     }
 }
