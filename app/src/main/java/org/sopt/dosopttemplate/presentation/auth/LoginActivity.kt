@@ -1,6 +1,8 @@
 package org.sopt.dosopttemplate.presentation.auth
 
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
@@ -98,8 +100,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
     private fun intentToProfileActivity() {
         Intent(this, MainActivity::class.java).apply {
+            addFlags(FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK)
             startActivity(this)
         }
+        finish()
     }
 
     private fun hideKeyboard() {
