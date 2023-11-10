@@ -11,7 +11,7 @@ import org.sopt.dosopttemplate.util.extension.loadImage
 class FriendProfileAdapter(private val clickItem: (Int) -> Unit) :
     ListAdapter<FriendProfile, FriendProfileAdapter.FriendProfileViewHolder>(
         DiffCallback<FriendProfile>(
-            onContentsTheSame = { old, new -> old == new },
+            onContentsTheSame = { old, new -> old.id == new.id },
             onItemsTheSame = { old, new -> old == new },
         ),
     ) {
