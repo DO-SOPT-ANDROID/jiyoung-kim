@@ -21,7 +21,7 @@ class LoginViewModel @Inject constructor(private val authRepository: AuthReposit
     private val _isAutoLoginValid = MutableLiveData(false)
     val isAutoLoginValid: LiveData<Boolean> get() = _isAutoLoginValid
 
-    var user = User("", "", "", "")
+    var user = User("", "", "", "", "")
 
     init {
         authRepository.getUser()

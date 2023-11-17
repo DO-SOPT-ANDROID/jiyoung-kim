@@ -12,18 +12,9 @@ class AuthLocalDataSource @Inject constructor(
         return pref.getString(key, "default").toString()
     }
 
-    private fun getBoolean(key: String): Boolean {
-        return pref.getBoolean(key, false)
-    }
-
     private fun setString(key: String, value: String) =
         pref.edit {
             putString(key, value)
-        }
-
-    private fun setBoolean(key: String, value: Boolean) =
-        pref.edit {
-            putBoolean(key, value)
         }
 
     fun updateUser(user: User) {
@@ -31,6 +22,7 @@ class AuthLocalDataSource @Inject constructor(
         setString(USER_PASSWORD, user.pwd)
         setString(USER_NAME, user.name ?: "")
         setString(USER_MBTI, user.mbti ?: "")
+        setString(USER_BIRTHDAY, user.birthday ?: "")
     }
 
     fun getUser(): User {
@@ -38,8 +30,9 @@ class AuthLocalDataSource @Inject constructor(
         val pwd = getString(USER_PASSWORD)
         val name = getString(USER_NAME)
         val mbti = getString(USER_MBTI)
+        val birthday = getString(USER_BIRTHDAY)
 
-        return User(id, pwd, name, mbti)
+        return User(id, pwd, name, mbti, birthday)
     }
 
     fun deleteUser() = pref.edit { clear() }
@@ -54,5 +47,6 @@ class AuthLocalDataSource @Inject constructor(
         private const val USER_NAME = "userName"
         private const val USER_MBTI = "userMbti"
         private const val IS_ALREADY_EXIST_USER = "isAlreadyExistUser"
+        private const val USER_BIRTHDAY = "userBirthday"
     }
 }

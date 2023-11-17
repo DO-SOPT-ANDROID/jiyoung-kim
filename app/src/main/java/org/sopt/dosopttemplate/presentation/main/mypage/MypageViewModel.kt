@@ -20,7 +20,7 @@ class MypageViewModel @Inject constructor(private val authRepository: AuthReposi
         user.value = getUserInfo()
     }
 
-    private fun getUserInfo(): User = authRepository.getUser() ?: User("", "", "", "")
+    private fun getUserInfo(): User = authRepository.getUser() ?: User("", "", "", "", "")
 
     fun deleteUser() {
         runCatching {
