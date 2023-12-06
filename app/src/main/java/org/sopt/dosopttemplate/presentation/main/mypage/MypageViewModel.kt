@@ -15,20 +15,4 @@ class MypageViewModel @Inject constructor(private val authRepository: AuthReposi
     val user = MutableLiveData<User>()
     private val _withdrawState = MutableLiveData<UiState>()
     val withdrawState: LiveData<UiState> get() = _withdrawState
-
-    init {
-        user.value = getUserInfo()
-    }
-
-    private fun getUserInfo(): User = authRepository.getUser() ?: User("", "", "", "", "")
-
-    fun deleteUser() {
-        runCatching {
-            authRepository.deleteUser()
-        }.onSuccess {
-            _withdrawState.value = UiState.Success
-        }.onFailure {
-            _withdrawState.value = UiState.Failure(null)
-        }
-    }
 }

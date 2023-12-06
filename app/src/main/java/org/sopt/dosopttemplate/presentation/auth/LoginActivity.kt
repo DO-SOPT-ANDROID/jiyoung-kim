@@ -92,7 +92,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                 "",
                 "",
             )
-            viewModel.login(loginInfo.toUser(), viewModel.user)
+            viewModel.login(loginInfo.toUser())
         } else {
             binding.root.showSnackbar(getString(R.string.signup_failed_empty))
         }

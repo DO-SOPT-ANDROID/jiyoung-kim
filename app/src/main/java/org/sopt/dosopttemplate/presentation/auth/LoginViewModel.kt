@@ -1,10 +1,11 @@
 package org.sopt.dosopttemplate.presentation.auth
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import org.sopt.dosopttemplate.domain.entity.User
 import org.sopt.dosopttemplate.domain.repository.AuthRepository
 import org.sopt.dosopttemplate.util.UiState
@@ -23,11 +24,6 @@ class LoginViewModel @Inject constructor(private val authRepository: AuthReposit
 
     var user = User("", "", "", "", "")
 
-    init {
-        authRepository.getUser()
-        setAutoLogin()
-    }
-
     private fun checkLoginValid(loginInfo: User, signUpInfo: User): Boolean =
         (loginInfo.id == signUpInfo.id && loginInfo.pwd == signUpInfo.pwd)
 
@@ -35,22 +31,16 @@ class LoginViewModel @Inject constructor(private val authRepository: AuthReposit
         this.user = saveUser
     }
 
-    fun login(loginInfo: User, signUpInfo: User) {
-        if (!checkLoginValid(loginInfo, signUpInfo)) {
-            _loginState.value = UiState.Failure(LOGIN_ERROR)
-        } else {
-            _loginState.value = UiState.Success
-            authRepository.setAutoLogin(true)
+    fun login(user: User) {
+        viewModelScope.launch {
+            runCatching {
+                authRepository.signIn(user.id, user.pwd)
+            }.onSuccess {
+                _loginState.value = UiState.Success
+            }.onFailure {
+                _loginState.value = UiState.Failure(LOGIN_ERROR)
+            }
         }
-    }
-
-    private fun setAutoLogin() {
-        if (authRepository.getAutoLogin() && authRepository.getUser() != null) {
-            _loginState.value = UiState.Success
-        } else {
-            _loginState.value = UiState.Failure(null)
-        }
-        Log.d("login", "_loginState.value:: ${_loginState.value?.toString()}")
     }
 
     companion object {

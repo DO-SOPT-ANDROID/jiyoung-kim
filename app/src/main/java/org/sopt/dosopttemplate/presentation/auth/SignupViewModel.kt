@@ -1,10 +1,11 @@
 package org.sopt.dosopttemplate.presentation.auth
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import org.sopt.dosopttemplate.domain.entity.User
 import org.sopt.dosopttemplate.domain.repository.AuthRepository
 import org.sopt.dosopttemplate.util.UiState
@@ -28,27 +29,21 @@ class SignupViewModel @Inject constructor(private val authRepository: AuthReposi
     private fun checkMbtiValid(mbti: String): Boolean = mbti.isNotEmpty()
 
     fun signUp(user: User) {
-        if (!checkIdValid(user.id)) {
-            _signUpState.value = UiState.Failure(ID_ERROR)
-            _isSignUpValid.value = false
+        viewModelScope.launch {
+            runCatching {
+                authRepository.signUp(user.id, user.name, user.pwd)
+            }.onSuccess {
+                _signUpState.value = UiState.Success
+            }.onFailure {
+                _signUpState.value = UiState.Failure(ERROR)
+            }
         }
-        if (!checkPwdValid(user.pwd)) {
-            _signUpState.value = UiState.Failure(PWD_ERROR)
-            _isSignUpValid.value = false
-        }
-        if (!checkNameValid(user.pwd) || checkMbtiValid(user.pwd)) {
-            _signUpState.value = UiState.Failure(EMPTY_ERROR)
-            _isSignUpValid.value = false
-        }
-        _isSignUpValid.value = true
-        _signUpState.value = UiState.Success
-        authRepository.updateUser(user)
-        Log.d("test", "_isSignUpValid:: ${_isSignUpValid.value?.toString()}")
     }
 
     companion object {
         const val ID_ERROR = "idError"
         const val PWD_ERROR = "pwdError"
         const val EMPTY_ERROR = "emptyError"
+        const val ERROR = "Error"
     }
 }

@@ -1,21 +1,34 @@
 package org.sopt.dosopttemplate.data.repository
 
-import org.sopt.dosopttemplate.data.datasource.local.AuthLocalDataSource
-import org.sopt.dosopttemplate.domain.entity.User
+import org.sopt.dosopttemplate.data.datasource.remote.AuthRemoteDataSource
+import org.sopt.dosopttemplate.data.model.request.RequestSignInDto
+import org.sopt.dosopttemplate.data.model.request.RequestSignUpDto
+import org.sopt.dosopttemplate.data.model.response.ResponseSignInDto
 import org.sopt.dosopttemplate.domain.repository.AuthRepository
 import javax.inject.Inject
 
-class AuthRepositoryImpl @Inject constructor(private val localAuthDataSource: AuthLocalDataSource) :
+class AuthRepositoryImpl @Inject constructor(
+    private val authDataSource: AuthRemoteDataSource,
+) :
     AuthRepository {
-    override fun updateUser(user: User) =
-        localAuthDataSource.updateUser(user)
-
-    override fun getUser(): User = localAuthDataSource.getUser()
-
-    override fun deleteUser() = localAuthDataSource.deleteUser()
-    override fun setAutoLogin(isAlreadyExist: Boolean) {
-        localAuthDataSource.isAlreadyExistUserInfo = isAlreadyExist
+    override suspend fun signUp(
+        username: String,
+        nickname: String,
+        password: String,
+    ): Result<Unit> = runCatching {
+        authDataSource.signUp(
+            RequestSignUpDto(
+                username = username,
+                nickname = nickname,
+                password = password,
+            ),
+        )
     }
 
-    override fun getAutoLogin(): Boolean = localAuthDataSource.isAlreadyExistUserInfo
+    override suspend fun signIn(
+        username: String,
+        password: String,
+    ): Result<ResponseSignInDto> = kotlin.runCatching {
+        authDataSource.signIn(RequestSignInDto(username, password))
+    }
 }
