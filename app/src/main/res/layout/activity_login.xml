@@ -29,61 +29,90 @@
             android:id="@+id/tv_login_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="42dp"
             android:text="@string/tv_login_id"
-            android:textStyle="bold"
             android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_login_title" />
 
-        <EditText
-            android:id="@+id/edt_login_id"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_login_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="10dp"
-            android:hint="아이디를 입력해주세요."
+            android:paddingHorizontal="30dp"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxStrokeColor="#000000"
+            app:boxStrokeWidthFocused="1dp"
+            app:errorEnabled="false"
+            app:helperText="@null"
+            app:helperTextTextColor="@color/design_default_color_error"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_login_id" />
+            app:layout_constraintTop_toBottomOf="@id/tv_login_id">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_login_id"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textAppearance="?textAppearanceBodyMedium" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/tv_login_pwd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
             android:text="@string/tv_login_pwd"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:layout_marginTop="30dp"
-            app:layout_constraintStart_toStartOf="@+id/edt_login_id"
-            app:layout_constraintTop_toBottomOf="@+id/edt_login_id"
+            app:layout_constraintStart_toStartOf="@+id/til_login_id"
+            app:layout_constraintTop_toBottomOf="@+id/til_login_id"
             tools:ignore="MissingConstraints" />
 
-        <EditText
-            android:id="@+id/edt_login_pwd"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_login_pwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginHorizontal="20dp"
-            android:inputType="textPassword"
-            android:hint="@string/edt_login_pwd"
+            android:paddingHorizontal="30dp"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxStrokeColor="#000000"
+            app:boxStrokeWidthFocused="1dp"
+            app:errorEnabled="false"
+            app:helperText="@null"
+            app:helperTextTextColor="@color/design_default_color_error"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_login_pwd" />
+            app:layout_constraintTop_toBottomOf="@id/tv_login_pwd">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_login_pwd"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textAppearance="?textAppearanceBodyMedium" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_login_bottom"
+            style="@style/TextAppearance.Material3.BodyMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="30dp"
             android:layout_marginBottom="50dp"
-            android:text="@string/btn_login_bottom"
-            android:textSize="15sp"
-            android:textColor="@color/black"
-            android:stateListAnimator="@null"
-            style="@style/TextAppearance.Material3.BodyMedium"
-            android:elevation="0dp"
             android:background="@drawable/rect_light_purple_radius_10"
+            android:elevation="0dp"
+            android:stateListAnimator="@null"
+            android:text="@string/btn_login_bottom"
+            android:textColor="@color/black"
+            android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -92,14 +121,13 @@
             android:id="@+id/tv_login_signup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tv_login_signup"
-            android:textSize="13sp"
-            android:textColor="#B4B4B3"
             android:layout_marginTop="10dp"
-            app:layout_constraintStart_toStartOf="@id/btn_login_bottom"
+            android:text="@string/tv_login_signup"
+            android:textColor="#B4B4B3"
+            android:textSize="13sp"
             app:layout_constraintEnd_toEndOf="@+id/btn_login_bottom"
-            app:layout_constraintTop_toBottomOf="@+id/btn_login_bottom"
-            />
+            app:layout_constraintStart_toStartOf="@id/btn_login_bottom"
+            app:layout_constraintTop_toBottomOf="@+id/btn_login_bottom" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
