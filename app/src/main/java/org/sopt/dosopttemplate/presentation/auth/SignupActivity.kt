@@ -1,7 +1,6 @@
 package org.sopt.dosopttemplate.presentation.auth
 
 import android.app.DatePickerDialog
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.util.Log
@@ -83,7 +82,11 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(R.layout.activity_sig
     }
 
     private fun intentToLogin() {
-        Intent(this, LoginActivity::class.java).apply {
+//        Intent(this, LoginActivity::class.java).apply {
+//            finish()
+//        }
+
+        startActivity(LoginActivity.getIntent(this, formattedDate)).apply {
             finish()
         }
     }
