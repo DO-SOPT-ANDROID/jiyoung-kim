@@ -88,8 +88,6 @@ class HomeViewModel @Inject constructor(private val authRepository: AuthReposito
                 message = "등산가야하는데..",
             ),
         )
-
-        user.value = getUserInfo()
     }
 
     fun removeFriendAt(position: Int) {
@@ -100,6 +98,4 @@ class HomeViewModel @Inject constructor(private val authRepository: AuthReposito
             friendList.value = updatedList
         }
     }
-
-    private fun getUserInfo(): User = authRepository.getUser() ?: User("", "", "", "", "")
 }

@@ -1,14 +1,12 @@
 package org.sopt.dosopttemplate.presentation.auth
 
 import android.app.DatePickerDialog
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.util.Log
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import org.sopt.dosopttemplate.R
-import org.sopt.dosopttemplate.data.model.User
 import org.sopt.dosopttemplate.databinding.ActivitySignupBinding
 import org.sopt.dosopttemplate.presentation.auth.SignupViewModel.Companion.EMPTY_ERROR
 import org.sopt.dosopttemplate.presentation.auth.SignupViewModel.Companion.ID_ERROR
@@ -25,14 +23,37 @@ import java.util.Locale
 @AndroidEntryPoint
 class SignupActivity : BaseActivity<ActivitySignupBinding>(R.layout.activity_signup) {
     private val viewModel by viewModels<SignupViewModel>()
-    private lateinit var user: User
     private var formattedDate: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding.vm = viewModel
         observeSignUpState()
+        setErrorEditText()
         clickListeners()
         hideKeyboard()
+    }
+
+    private fun setErrorEditText() {
+        viewModel.isIdValid.observe(this) { isIdValid ->
+            Log.d("signUp", "isIdValid:: ${viewModel.isIdValid.value}")
+            if (!isIdValid) {
+                binding.tilSignupId.error = "영문/숫자 6-10글자가 포함되어야해요"
+            } else {
+                binding.tilSignupId.error = null
+                binding.tilSignupId.isErrorEnabled = false
+            }
+        }
+        viewModel.isPwdValid.observe(this) { isPwdValid ->
+            Log.d("signUp", "isPwdValid:: ${viewModel.isPwdValid.value}")
+
+            if (!isPwdValid) {
+                binding.tilSignupPwd.error = "영문/숫자/특수문자 6-12글자가 포함되어야해요"
+            } else {
+                binding.tilSignupPwd.error = null
+                binding.tilSignupPwd.isErrorEnabled = false
+            }
+        }
     }
 
     private fun observeSignUpState() {
@@ -52,14 +73,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(R.layout.activity_sig
 
     private fun clickListeners() {
         binding.btnSignupBottom.setOnClickListener {
-            user = User(
-                binding.edtSignupId.text.toString(),
-                binding.edtSignupPwd.text.toString(),
-                binding.edtSignupNickname.text.toString(),
-                binding.edtSignupMbti.text.toString(),
-                binding.edtSignupBirthday.text.toString(),
-            )
-            viewModel.signUp(user.toUser())
+            viewModel.signUp()
         }
 
         binding.ivSignupCalendar.setOnClickListener {
@@ -68,10 +82,13 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(R.layout.activity_sig
     }
 
     private fun intentToLogin() {
-        val intent = Intent(this, LoginActivity::class.java)
-        intent.putExtra(USER_INFO, user)
-        setResult(RESULT_OK, intent)
-        finish()
+//        Intent(this, LoginActivity::class.java).apply {
+//            finish()
+//        }
+
+        startActivity(LoginActivity.getIntent(this, formattedDate)).apply {
+            finish()
+        }
     }
 
     private fun hideKeyboard() {
@@ -96,16 +113,19 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(R.layout.activity_sig
             datePicker.get(Calendar.MONTH),
             datePicker.get(Calendar.DAY_OF_MONTH),
         ).show()
+
+        with(binding) {
+            edtSignupBirthday.requestFocus()
+            edtSignupBirthday.isCursorVisible = false
+        }
     }
 
     private fun updateBirthdayEditText(date: Date) {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
         formattedDate = dateFormat.format(date)
-        Log.d("signup", "formattedDate:: $formattedDate")
-        binding.edtSignupBirthday.text = Editable.Factory.getInstance().newEditable(formattedDate)
-    }
-
-    companion object {
-        const val USER_INFO = "userInfo"
+        with(binding) {
+            edtSignupBirthday.text = Editable.Factory.getInstance().newEditable(formattedDate)
+            edtSignupBirthday.isCursorVisible = false
+        }
     }
 }

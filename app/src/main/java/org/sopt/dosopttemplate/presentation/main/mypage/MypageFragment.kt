@@ -20,7 +20,6 @@ class MypageFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_pr
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
-        clickListener()
         observeWithdrawState()
     }
 
@@ -30,12 +29,6 @@ class MypageFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_pr
             tvProfileId.text = viewModel.user.value?.id.toString()
             tvProfileName.text = viewModel.user.value?.name.toString()
             tvProfileMbti.text = viewModel.user.value?.mbti.toString()
-        }
-    }
-
-    private fun clickListener() {
-        binding.tvProfileWithdraw.setOnClickListener {
-            viewModel.deleteUser()
         }
     }
 

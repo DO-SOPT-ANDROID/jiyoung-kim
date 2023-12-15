@@ -1,8 +1,7 @@
 package org.sopt.dosopttemplate.presentation.auth
 
+import android.content.Context
 import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
@@ -23,13 +22,19 @@ import org.sopt.dosopttemplate.util.extension.showSnackbar
 class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login) {
     private val viewModel by viewModels<LoginViewModel>()
     private lateinit var signUpResultLauncher: ActivityResultLauncher<Intent>
+    private lateinit var userBirthday: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initResultLauncher()
+        getIntentFromSignUp()
+//        initResultLauncher()
         observeLoginState()
         hideKeyboard()
         clickListeners()
+    }
+
+    private fun getIntentFromSignUp() {
+        userBirthday = intent.getStringExtra(BIRTHDAY) ?: ""
     }
 
     private fun initResultLauncher() {
@@ -75,7 +80,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                 login()
             }
             tvLoginSignup.setOnClickListener {
-                signUpResultLauncher.launch(Intent(this@LoginActivity, SignupActivity::class.java))
+                Intent(this@LoginActivity, SignupActivity::class.java).apply {
+                    startActivity(this)
+                }
             }
         }
     }
@@ -92,18 +99,22 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                 "",
                 "",
             )
-            viewModel.login(loginInfo.toUser(), viewModel.user)
+            viewModel.login(loginInfo.toUser())
         } else {
             binding.root.showSnackbar(getString(R.string.signup_failed_empty))
         }
     }
 
     private fun intentToProfileActivity() {
-        Intent(this, MainActivity::class.java).apply {
-            addFlags(FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK)
-            startActivity(this)
+//        Intent(this, MainActivity::class.java).apply {
+//            addFlags(FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK)
+//            startActivity(this)
+//        }
+//        finish()
+
+        startActivity(MainActivity.getIntent(this, userBirthday)).apply {
+            finish()
         }
-        finish()
     }
 
     private fun hideKeyboard() {
@@ -114,5 +125,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
     companion object {
         const val USER_INFO = "userInfo"
+        const val BIRTHDAY = "birthday"
+
+        fun getIntent(context: Context, birthday: String): Intent {
+            return Intent(context, LoginActivity::class.java).apply {
+                putExtra(BIRTHDAY, birthday)
+            }
+        }
     }
 }

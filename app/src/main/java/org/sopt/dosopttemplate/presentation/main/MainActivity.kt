@@ -1,21 +1,33 @@
 package org.sopt.dosopttemplate.presentation.main
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
 import org.sopt.dosopttemplate.R
 import org.sopt.dosopttemplate.databinding.ActivityMainBinding
+import org.sopt.dosopttemplate.presentation.MainViewModel
+import org.sopt.dosopttemplate.presentation.auth.LoginActivity
 import org.sopt.dosopttemplate.presentation.base.BaseActivity
 import org.sopt.dosopttemplate.presentation.main.home.HomeFragment
 import org.sopt.dosopttemplate.presentation.main.mypage.MypageFragment
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
+    private val viewModel by viewModels<MainViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        getIntentFromSignUp()
         initFragment()
         initBottomNavigation()
+    }
+
+    private fun getIntentFromSignUp() {
+        viewModel.birthdayInfo.value = intent.getStringExtra(LoginActivity.BIRTHDAY) ?: ""
     }
 
     private fun initFragment() {
@@ -55,5 +67,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fcv_home, fragment)
             .commit()
+    }
+
+    companion object {
+        private const val BIRTHDAY = "birthday"
+
+        fun getIntent(context: Context, birthday: String): Intent {
+            return Intent(context, MainActivity::class.java).apply {
+                putExtra(BIRTHDAY, birthday)
+            }
+        }
     }
 }
